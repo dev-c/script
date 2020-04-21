@@ -49,6 +49,7 @@ audio = document.getElementById('audio');
 
 audio.addEventListener('play', play_evento, false);
 audio.addEventListener('timeupdate', atualizar, false);
+audio.addEventListener('loadedmetadata', loadedMetadata, false);
 
 function play() { audio.play(); }
 function pause() { audio.pause(); }
@@ -56,6 +57,13 @@ function stop() {
     audio.pause(); 
     audio.currentTime = 0; 
 }
+
+function loadedMetadata() {
+    channels          = audio.mozChannels;
+    rate              = audio.mozSampleRate;
+    frameBufferLength = audio.mozFrameBufferLength;      
+}
+
 function play_evento() { 
     document.getElementById('tempo_atual').innerHTML = secToStr(audio.currentTime);
     document.getElementById('tempo_total').innerHTML = secToStr(audio.duration);
