@@ -9,7 +9,7 @@ var a = document.createElement('a');
 var a1 = document.createElement('a');
 var a2 = document.createElement('a');
 var elemento_audio = document.createElement('audio');
-//var source = document.createElement('source');
+var source = document.createElement('source');
 var source1 = document.createElement('source');
 //FINAL DA DECLARAÇÃO DAS VARIÁVEIS
 
@@ -20,11 +20,11 @@ elemento_audio.setAttribute('id', 'audio');
 document.body.appendChild(elemento_audio);
 div.appendChild(elemento_audio);
 //source.setAttribute('src', '04 - Fear Is The Key.ogg');
-//source.setAttribute('src', 'https://www.botecodigital.info/exemplos/audio/i_am_the_doctor.ogg');
-//source.setAttribute('type', 'audio/ogg');
-//document.body.appendChild(source);
-//elemento_audio.appendChild(source);
-//source1.setAttribute('src', '04 - Fear Is The Key.mp3');
+source.setAttribute('src', 'https://www.botecodigital.info/exemplos/audio/i_am_the_doctor.ogg');
+source.setAttribute('type', 'audio/ogg');
+document.body.appendChild(source);
+elemento_audio.appendChild(source);
+source1.setAttribute('src', '04 - Fear Is The Key.mp3');
 source1.setAttribute('src', 'https://www.botecodigital.info/exemplos/audio/i_am_the_doctor.mp3');
 source1.setAttribute('type', 'audio/mpeg');
 document.body.appendChild(source1);
