@@ -21,41 +21,42 @@ function init() {
 	document.body.appendChild(elemento_audio);//INSERINDO O ELEMENTO audio NO BODY DA PÁGINA
 	div.appendChild(elemento_audio);//INSERINDO O ELEMENTO audio DENTRO DA audioDiv
 	//FINAL AUDIO DIV
+	play(); //MÉTODO PARA TOCAR A MÚSICA, INICIADO MUDO POR PADRÃO PARA ARMAZENAR EM BUFFER
 }
 
-function trocaFaixa(url) {
-	audio.src = url;
-	play();
-	audio.muted = true;
+function trocaFaixa(url) { //MÉTODO PARA TROCAR A MÚSICA
+	audio.src = url; //VARIÁVEL PARA TROCAR A MÚSICA DO ELEMENTO audio
+	play(); //MÉTODO PARA EXECUTAR O ÁUDIO, PARA CRIAR O BUFFER DO ÁUDIO
+	audio.muted = true; //VARIÁVEL PARA MUTAR O ÁUDIO ENQUANDO É EXECUTADO PARA ARMAZENAR EM BUFFER
 }
 
 function play() {//FUNÇÃO PARA EXECUÇÃO DO ÁUDIO
-   	audio.currentTime = 0;  //VARIÁVEL PADRÃO PARA DEFINIR EM QUAL SEGUNDO O ÁUDIO VAI INICIAR
-	audio.play(); 
-	mute();
+    audio.currentTime = 0;  //VARIÁVEL PADRÃO PARA DEFINIR EM QUAL SEGUNDO O ÁUDIO VAI INICIAR
+	audio.play(); //MÉTODO PADRÃO PARA EXECUTAR O ÁUDIO
+	mute(); //MÉTODO PARA DESMUTAR O ÁUDIO
 } 
 function stop() {  //FUNÇÃO PARA PARAR O ÁUDIO, FAZENDO COM QUE O MESMO VOLTE DO INÍCIO QUANDO INICIAR O play() NOVAMENTE
-	mute();
-    	audio.pause(); //FUNÇÃO PADRÃO PARA PAUSAR O ÁUDIO
-    	audio.currentTime = 0;  //VARIÁVEL PADRÃO PARA DEFINIR EM QUAL SEGUNDO O ÁUDIO VAI INICIAR
+	mute(); //MÉTODO PARA MUTAR O ÁUDIO
+    audio.pause(); //FUNÇÃO PADRÃO PARA PAUSAR O ÁUDIO
+    audio.currentTime = 0;  //VARIÁVEL PADRÃO PARA DEFINIR EM QUAL SEGUNDO O ÁUDIO VAI INICIAR
 }
-function mute() {
-	if (audio.muted) {
-		audio.muted = false;
-	} else {
-		audio.muted = true;
+function mute() { //MÉTODO CRIADO PARA MUTAR E DESMUTAR O ÁUDIO
+	if (audio.muted) { //SE O ÁUDIO ESTIVER MUTADO
+		audio.muted = false; //DESMUTA O ÁUDIO
+	} else { // SE NÃO ESTIVER MUTADO
+		audio.muted = true; //MUTA O ÁUDIO
 	}
 }
 function mensagem() { //MÉTODO PARA ENVIAR A MENSAGEM PARA O USUÁRIO QUANDO ENCONTRAR UMA NOVA TAREFA
 	play(); //MÉTODO PARA TOCAR A MÚSICA
-	//setTimeout(function() {}, 8460000);
-	if (confirm("NOVA TAREFA, BORA TRABALHAR!!")) {
-		ativo = true;
-		stop();
-    	}
+    //setTimeout(function() {}, 8460000);
+    if (confirm("NOVA TAREFA, BORA TRABALHAR!!")) {
+        ativo = true;
+        stop();
+    }
 }
 function run(max, min) {//FUNÇÃO PARA EXECUTAR O AUTOCLICK NO BOTÃO DE ADQUIRIR AS TAREFAS
-    // INÍCIO AUTO CLICK
+	// INÍCIO AUTO CLICK
 	init();
 	setInterval(function() {
 	    if (document.querySelector('#gwt-debug-acquire_task_button')){ //SE O BOTÃO DE ADQUIRIR TAREFAS EXISTIR NA PÁGINA
