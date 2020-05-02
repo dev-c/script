@@ -22,6 +22,7 @@ function init() {
 	div.appendChild(elemento_audio);//INSERINDO O ELEMENTO audio DENTRO DA audioDiv
 	//FINAL AUDIO DIV
 	play(); //MÉTODO PARA TOCAR A MÚSICA, INICIADO MUDO POR PADRÃO PARA ARMAZENAR EM BUFFER
+	audio.muted = true; //VARIÁVEL PARA MUTAR O ÁUDIO ENQUANDO É EXECUTADO PARA ARMAZENAR EM BUFFER
 }
 
 function trocaFaixa(url) { //MÉTODO PARA TROCAR A MÚSICA
@@ -31,29 +32,21 @@ function trocaFaixa(url) { //MÉTODO PARA TROCAR A MÚSICA
 }
 
 function play() {//FUNÇÃO PARA EXECUÇÃO DO ÁUDIO
-    audio.currentTime = 0;  //VARIÁVEL PADRÃO PARA DEFINIR EM QUAL SEGUNDO O ÁUDIO VAI INICIAR
+    	audio.currentTime = 0;  //VARIÁVEL PADRÃO PARA DEFINIR EM QUAL SEGUNDO O ÁUDIO VAI INICIAR
 	audio.play(); //MÉTODO PADRÃO PARA EXECUTAR O ÁUDIO
-	mute(); //MÉTODO PARA DESMUTAR O ÁUDIO
+	audio.muted = false; //MÉTODO PARA DESMUTAR O ÁUDIO
 } 
 function stop() {  //FUNÇÃO PARA PARAR O ÁUDIO, FAZENDO COM QUE O MESMO VOLTE DO INÍCIO QUANDO INICIAR O play() NOVAMENTE
-	mute(); //MÉTODO PARA MUTAR O ÁUDIO
-    audio.pause(); //FUNÇÃO PADRÃO PARA PAUSAR O ÁUDIO
-    audio.currentTime = 0;  //VARIÁVEL PADRÃO PARA DEFINIR EM QUAL SEGUNDO O ÁUDIO VAI INICIAR
-}
-function mute() { //MÉTODO CRIADO PARA MUTAR E DESMUTAR O ÁUDIO
-	if (audio.muted) { //SE O ÁUDIO ESTIVER MUTADO
-		audio.muted = false; //DESMUTA O ÁUDIO
-	} else { // SE NÃO ESTIVER MUTADO
-		audio.muted = true; //MUTA O ÁUDIO
-	}
+	audio.muted = true; //MÉTODO PARA MUTAR O ÁUDIO
+    	audio.pause(); //FUNÇÃO PADRÃO PARA PAUSAR O ÁUDIO
+    	audio.currentTime = 0;  //VARIÁVEL PADRÃO PARA DEFINIR EM QUAL SEGUNDO O ÁUDIO VAI INICIAR
 }
 function mensagem() { //MÉTODO PARA ENVIAR A MENSAGEM PARA O USUÁRIO QUANDO ENCONTRAR UMA NOVA TAREFA
 	play(); //MÉTODO PARA TOCAR A MÚSICA
-    //setTimeout(function() {}, 8460000);
-    if (confirm("NOVA TAREFA, BORA TRABALHAR!!")) {
-        ativo = true;
-        stop();
-    }
+	if (confirm("NOVA TAREFA, BORA TRABALHAR!!")) {
+		ativo = true;
+		stop();
+	}
 }
 function run(max, min) {//FUNÇÃO PARA EXECUTAR O AUTOCLICK NO BOTÃO DE ADQUIRIR AS TAREFAS
 	// INÍCIO AUTO CLICK
