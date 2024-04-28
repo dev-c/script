@@ -1,57 +1,91 @@
-if (!audio) {
-	var newTask = false; 
-	var window_focus = true; 
-	window.onblur = function() { window_focus = false; }; 
-	window.onfocus = function() { 
-		if (newTask) { 
-			if (confirm("NOVA TAREFA, BORA TRABALHAR!!")) {
-				stop(); newTask = false;
-			} else {
-				stop(); newTask = false;
-			}; 
-		} window_focus = true;
-	}; 
+//INÍCIO DA DECLARAÇÃO DAS VARIÁVEIS
+var count = 0;
+var enviar = document.getElementById("gwt-debug-acquire_task_button");
+var div = document.createElement('div');
+var progresso = document.createElement('progress');
+var span = document.createElement('span');
+var span1 = document.createElement('span');
+var a = document.createElement('a');
+var a1 = document.createElement('a');
+var a2 = document.createElement('a');
+var elemento_audio = document.createElement('audio');
+var source = document.createElement('source');
+var source1 = document.createElement('source');
+//FINAL DA DECLARAÇÃO DAS VARIÁVEIS
 
-	var audio = document.createElement('audio');
-	audio.src = 'https://marcoshenzel.github.io/script/diversos/sounds/Tones%20and%20I%20-%20Dance%20Monkey%20(Metalcover%20by%20Agordas).mp3';
-	audio.type = 'audio/mp3';
-	audio.play();
-	audio.loop = true;
-	audio.muted =true;
+//INICIO AUDIO DIV
+div.setAttribute('id', 'audiodiv');
+document.body.appendChild(div);
+elemento_audio.setAttribute('id', 'audio');
+document.body.appendChild(elemento_audio);
+div.appendChild(elemento_audio);
+//source.setAttribute('src', '04 - Fear Is The Key.ogg');
+source.setAttribute('src', 'https://www.botecodigital.info/exemplos/audio/i_am_the_doctor.ogg');
+source.setAttribute('type', 'audio/ogg');
+document.body.appendChild(source);
+elemento_audio.appendChild(source);
+//source1.setAttribute('src', '04 - Fear Is The Key.mp3');
+source1.setAttribute('src', 'https://www.botecodigital.info/exemplos/audio/i_am_the_doctor.mp3');
+source1.setAttribute('type', 'audio/mpeg');
+document.body.appendChild(source1);
+elemento_audio.appendChild(source1);
 
-	function play(){
-		audio.currentTime = 0;
-		audio.muted = false;
-	}
+//INÍCIO BARRA PROGRESSO
+progresso.setAttribute('id', 'barra_progresso');
+progresso.setAttribute('max', '101.359456');
+progresso.setAttribute('value', '0.022154');
+document.body.appendChild(progresso);
+//FINAL BARRA PROGRESSO
 
-	function stop(){ audio.muted = true; }
-	function addClassNameListener(elemId) {
-		var elem = document.querySelector(elemId);
-		var lastClassName = elem.className;
-		
-		window.setInterval( function() {
-			var className = elem.className;
-			if (className !== lastClassName) {
-				if (elem.classList.contains("enabled")){
-					play(); setTimeout(function(){ 
-						if (window_focus) { 
-							if (confirm("NOVA TAREFA, BORA TRABALHAR!!")) {
-								stop();
-							} else {
-								stop();
-							};
-						} else {
-							newTask = true;
-						}
-					},1000);
-				}lastClassName = className;
-			}
-		},10);
-	}
+span.setAttribute('id', 'tempo_atual');
+span.appendChild(document.createTextNode('00:00:00'));
+div.appendChild(span);
+span1.setAttribute('id', 'tempo_total');
+span1.appendChild(document.createTextNode('00:01:41'));
+div.appendChild(span1);
+// FINAL AUDIO DIV
 
-	addClassNameListener(".start-button");
-	console.log('%c WeAds Contato:', 'background: #00ff40; color: black; font-size: 10px;', '💬 https://wa.me/5553991227225');
-	console.log('%c script ATIVO! ', 'background: #222; color: #bada55; font-size: 40px;');
-} else { 
-	console.log('%c O script já está ATIVO! ', 'background: red; color: white; font-size: 20px;');
+// INÍCIO LÓGICA SCRIPT DO ÁUDIO
+
+audio = document.getElementById('audio');
+
+audio.addEventListener('play', play_evento, false);
+audio.addEventListener('timeupdate', atualizar, false);
+audio.addEventListener('loadedmetadata', loadedMetadata, false);
+
+function play() { audio.play(); }
+function pause() { audio.pause(); }
+function stop() { 
+    audio.pause(); 
+    audio.currentTime = 0; 
 }
+
+function loadedMetadata() {
+    channels          = audio.mozChannels;
+    rate              = audio.mozSampleRate;
+    frameBufferLength = audio.mozFrameBufferLength;      
+}
+
+function play_evento() { 
+    document.getElementById('tempo_atual').innerHTML = secToStr(audio.currentTime);
+    document.getElementById('tempo_total').innerHTML = secToStr(audio.duration);
+
+    document.getElementById('barra_progresso').max = audio.duration;
+    document.getElementById('barra_progresso').value = audio.currentTime;
+}
+function atualizar() {
+    document.getElementById('tempo_atual').innerHTML = secToStr(audio.currentTime);
+    document.getElementById('barra_progresso').value = audio.currentTime;
+}
+
+function secToStr(sec_num) {
+    sec_num = Math.floor(sec_num);
+    var horas = Math.floor(sec_num / 3600);
+    var minutos = Math.floor((sec_num - (horas * 3600)) / 60);
+    var segundos = sec_num - (horas * 3600) - (minutos * 60);
+
+    if (horas < 10) {horas = "0"+horas;}
+    if (minutos < 10) {minutos = "0"+minutos;}
+    if (segundos < 10) {segundos = "0"+segundos;}
+    var tempo = horas+':'+minutos+':'+segundos;
+    return tempo;
